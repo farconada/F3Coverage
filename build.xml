@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<project name="test" basedir="." default="testtask">
+    <taskdef name="F3FunctionalCoverageMapper" classname="phing.tasks.FLOW3.F3FunctionalCoverageMapperTask"/>
+
+    <target name="testtask">
+        <F3FunctionalCoverageMapper cloverFile="coverFunctional.xml" packageName="F2.SLists"
+                                    packagePath="/var/www/html/F2.SLists/"/>
+        <coverage-setup database="cover.db">
+            <fileset dir="/var/www/html/F2.SLists/">
+                 <include name="**/*.php"/>
+            </fileset>
+        </coverage-setup>
+        <coverage-merger>
+          <fileset dir=".">
+            <include name="coverFunctional.xml"/>
+          </fileset>
+        </coverage-merger>
+        <coverage-report>
+            <report toDir="report/" styleDir="/usr/share/pear/data/phing/etc/"/>
+        </coverage-report>
+    </target>
+
+</project>
