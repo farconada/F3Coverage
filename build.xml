@@ -2,19 +2,21 @@
 
 <project name="test" basedir="." default="testtask">
     <taskdef name="F3FunctionalCoverageMapper" classname="phing.tasks.FLOW3.F3FunctionalCoverageMapperTask"/>
+    <taskdef name="CoverageClover2Xdebug" classname="phing.tasks.FLOW3.CoverageClover2XdebugTask"/>
 
     <target name="testtask">
         <F3FunctionalCoverageMapper cloverFile="coverFunctional.xml" packageName="F2.SLists"
                                     packagePath="/var/www/html/F2.SLists/"/>
+        <CoverageClover2Xdebug cloverFile="coverFunctional.xml" xdebugFile="coverFunctional.data"/>
         <coverage-setup database="cover.db">
-            <fileset dir="/var/www/html/F2.SLists/">
-                 <include name="**/*.php"/>
+            <fileset dir=".">
+                <include name="**/*.*"/>
             </fileset>
         </coverage-setup>
         <coverage-merger>
-          <fileset dir=".">
-            <include name="coverFunctional.xml"/>
-          </fileset>
+            <fileset dir=".">
+                <include name="coverFunctional.data"/>
+            </fileset>
         </coverage-merger>
         <coverage-report>
             <report toDir="report/" styleDir="/usr/share/pear/data/phing/etc/"/>
